@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assignment
@@ -13,8 +14,6 @@ namespace Assignment
             int target = 90;
             int index = -1;
 
-            // Your code here ...
-            // ...
             for (int i = 0; i < array.Length; i++)
             {
                 if (array[i] == target)
@@ -42,8 +41,6 @@ namespace Assignment
             int row = -1;
             int col = -1;
 
-            // Your code here ...
-            // ...
             for (int i = 0; i < array.GetLength(0); i++)
             {
                 for (int j = 0; j < array.GetLength(1); j++)
@@ -66,10 +63,8 @@ namespace Assignment
             int target = 23;
             int index = -1;
 
-            // Your code here ...
-            // ...
             int left = 0;
-            int right = array.Length;
+            int right = array.Length - 1; 
             while (left <= right)
             {
                 int mid = (left + right) / 2;
@@ -96,17 +91,62 @@ namespace Assignment
 
         public int[] AS01_FindFirstAndLastElementOfArray(int[] array, int target)
         {
-            throw new NotImplementedException();
+            int first = -1;
+            int last = -1;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] == target)
+                {
+                    if (first == -1) 
+                    {
+                        first = i; 
+                    }
+                    last = i; 
+                }
+            }
+
+            if (first == -1)
+            {
+                return new int[] { -1 };
+            }
+
+            return new int[] { first, last };
         }
 
         public int AS02_FindMaxLessThan(int[] array, int target)
         {
-            throw new NotImplementedException();
+            int maxVal = -1;
+            bool found = false;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] < target)
+                {
+                    if (!found || array[i] > maxVal)
+                    {
+                        maxVal = array[i];
+                        found = true;
+                    }
+                }
+            }
+
+            return found ? maxVal : -1;
         }
 
         public int[] AS03_FindRange(int[] array, int min, int max)
         {
-            throw new NotImplementedException();
+            List<int> result = new List<int>();
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] >= min && array[i] <= max)
+                {
+                    result.Add(array[i]);
+                }
+            }
+
+            return result.ToArray();
         }
 
         #endregion
@@ -115,7 +155,31 @@ namespace Assignment
 
         public int[] EX01_FindTargetEnemies(int[] enemyHPs, int mana)
         {
-            throw new NotImplementedException();
+            
+            int[] sortedHPs = new int[enemyHPs.Length];
+            Array.Copy(enemyHPs, sortedHPs, enemyHPs.Length);
+            
+            
+            Array.Sort(sortedHPs);
+
+            List<int> targets = new List<int>();
+            int currentMana = mana;
+
+            for (int i = 0; i < sortedHPs.Length; i++)
+            {
+                if (currentMana >= sortedHPs[i])
+                {
+                    targets.Add(sortedHPs[i]);
+                    currentMana -= sortedHPs[i];
+                }
+                else
+                {
+                    
+                    break;
+                }
+            }
+
+            return targets.ToArray();
         }
 
         #endregion
